@@ -1,10 +1,10 @@
 import { Searchbar } from './Searchbar/Searchbar';
-// import { ImageGallery } from './ImageGallery/ImageGallery';
-// import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 // import { Loader } from './Loader/Loader';
 // import { Button } from './Button/Button';
 // import { Modal } from './Modal/Modal';
 import React, { Component } from 'react';
+import { AppStyleDetka } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -17,10 +17,10 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <AppStyleDetka>
         <Searchbar onSubmit={this.DataHandleSubmit} />
-        <h2>jgdfslijgflig</h2>
-      </div>
+        <ImageGallery imgRequestName={this.state.imgRequestName}></ImageGallery>
+      </AppStyleDetka>
     );
   }
 }
