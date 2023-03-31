@@ -1,10 +1,10 @@
-import { Overlay, Modal } from './Modal.styled';
+import { Overlay, ModalImg } from './Modal.styled';
 
 export const Modal = ({ src }) => {
   return;
   <Overlay>
-    <Modal>
+    <ModalImg>
       <img src={src} alt="Рисунок в модалке" />
-    </Modal>
+    </ModalImg>
   </Overlay>;
 };
