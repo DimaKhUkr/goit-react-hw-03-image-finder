@@ -1,27 +1,26 @@
-import { Profile } from './Profile/Profile';
-import { Statistics } from './Stat/Statistics';
-import { FriendList } from './Friends/FriendList';
-import { TransactionHistory } from './Trans/TransactionHistory';
+import { Searchbar } from './Searchbar/Searchbar';
+// import { ImageGallery } from './ImageGallery/ImageGallery';
+// import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
+// import { Loader } from './Loader/Loader';
+// import { Button } from './Button/Button';
+// import { Modal } from './Modal/Modal';
+import React, { Component } from 'react';
 
-import user from '../Data/user.json';
-import data from '../Data/data.json';
-import friends from '../Data/friends.json';
-import transactions from '../Data/transactions.json';
+export class App extends Component {
+  state = {
+    imgRequestName: '',
+  };
+  componentDidMount() {}
+  componentDidUpdate(prevProps, prevState) {}
 
-export const App = () => {
-  return (
-    <div>
-      <Profile
-        username={user.username}
-        tag={user.tag}
-        location={user.location}
-        avatar={user.avatar}
-        stats={user.stats}
-      />
-      <Statistics title="Upload stats" stats={data} />
-      <Statistics stats={data} />
-      <FriendList prop={friends} />
-      <TransactionHistory prop={transactions} />
-    </div>
-  );
-};
+  DataHandleSubmit = imgRequestName => this.setState({ imgRequestName });
+
+  render() {
+    return (
+      <div>
+        <Searchbar onSubmit={this.DataHandleSubmit} />
+        <h2>jgdfslijgflig</h2>
+      </div>
+    );
+  }
+}
