@@ -5,7 +5,11 @@ export const Loader = () => {
       height="80"
       width="80"
       ariaLabel="progress-bar-loading"
-      wrapperStyle={{}}
+      wrapperStyle={{
+        display: 'block',
+        marginRight: 'auto',
+        marginLeft: 'auto',
+      }}
       wrapperClass="progress-bar-wrapper"
       borderColor="#F4442E"
       barColor="#51E5FF"

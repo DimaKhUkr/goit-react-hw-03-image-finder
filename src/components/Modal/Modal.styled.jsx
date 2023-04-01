@@ -9,10 +9,15 @@ export const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 1200;
+  // z-index: 1200;
 `;
 
 export const ModalImg = styled.div`
   max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 24px);
+  max-height: calc(100vh - 100px);
+  margin-top: 72px;
+`;
+export const ModalPic = styled.img`
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 100px);
 `;

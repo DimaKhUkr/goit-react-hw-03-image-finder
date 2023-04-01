@@ -1,17 +1,14 @@
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-// import { Loader } from './Loader/Loader';
-// import { Button } from './Button/Button';
-// import { Modal } from './Modal/Modal';
+import { ToastContainer } from 'react-toastify';
 import React, { Component } from 'react';
 import { AppStyleDetka } from './App.styled';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends Component {
   state = {
     imgRequestName: '',
   };
-  componentDidMount() {}
-  componentDidUpdate(prevProps, prevState) {}
 
   DataHandleSubmit = imgRequestName => this.setState({ imgRequestName });
 
@@ -20,6 +17,7 @@ export class App extends Component {
       <AppStyleDetka>
         <Searchbar onSubmit={this.DataHandleSubmit} />
         <ImageGallery imgRequestName={this.state.imgRequestName}></ImageGallery>
+        <ToastContainer />
       </AppStyleDetka>
     );
   }

@@ -2,26 +2,50 @@ import { Gallery, LoaderBtn } from './ImageGallery.styled';
 import React, { Component } from 'react';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Loader } from 'components/Loader/Loader';
-
-const API_KEY = '33377492-476d22b77d4b85ba3622e340f';
+import { Modal } from 'components/Modal/Modal';
+import { fetchImg } from 'components/Fetch/fetch';
+import PropTypes from 'prop-types';
 
 export class ImageGallery extends Component {
   state = {
     imgArr: null,
-    modalImg: '',
+    modalImg: null,
     loader: false,
     page: 1,
+    showModal: false,
   };
   //   componentDidMount() {}
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.imgRequestName !== this.props.imgRequestName) {
-      this.fetchImg();
+      this.setState({ loader: true });
+      this.setState({ imgArr: null });
+      this.getImgSet();
     }
+    if (prevState.modalImg !== this.state.modalImg && this.state.modalImg) {
+      this.setState({ showModal: true });
+    }
+
     if (prevState.page !== this.state.page) {
       this.setState({ loader: true });
-      this.fetchImg();
+      this.getImgSet();
     }
   }
+
+  async getImgSet() {
+    const filtered = await fetchImg(this.props.imgRequestName, this.state.page);
+    this.setState({ loader: false });
+    if (this.state.imgArr) {
+      return this.setState(prevState => {
+        return { imgArr: [...prevState.imgArr, ...filtered] };
+      });
+    }
+    return this.setState({ imgArr: filtered });
+  }
+
+  closeModal = () => {
+    this.setState({ showModal: false });
+    this.setState({ modalImg: null });
+  };
 
   onImgClick = e => {
     this.setState({ modalImg: e.currentTarget.alt });
@@ -29,45 +53,25 @@ export class ImageGallery extends Component {
 
   onLoaderButton = () => {
     this.setState(prevState => {
-      console.log(prevState.page);
       return {
         page: prevState.page + 1,
       };
     });
   };
 
-  async fetchImg() {
-    const searchParams = new URLSearchParams({
-      per_page: 12,
-      page: this.state.page,
-      key: API_KEY,
-      q: this.props.imgRequestName,
-    });
-    try {
-      const response = await fetch(`https://pixabay.com/api/?${searchParams}`);
-      if (!response.ok) {
-        throw new Error('Какая то беда 404');
-      }
-      this.setState({ loader: false });
-      const imgs = await response.json();
-      const filtered = imgs.hits.map(imgSet => {
-        return {
-          id: imgSet.id,
-          webformatURL: imgSet.webformatURL,
-          largeImageURL: imgSet.largeImageURL,
-        };
-      });
-
-      return this.setState({ imgArr: filtered });
-    } catch (error) {
-      console.log(error.message);
+  isButtonVisible = () => {
+    if (this.state.imgArr?.length > 0 && !(this.state.imgArr?.length < 12)) {
+      return true;
     }
-  }
+  };
 
   render() {
     return (
       <>
         <Gallery>
+          {this.state.showModal && (
+            <Modal closeModal={this.closeModal} src={this.state.modalImg} />
+          )}
           {this.state.imgArr && (
             <ImageGalleryItem
               onImgClick={this.onImgClick}
@@ -76,7 +80,7 @@ export class ImageGallery extends Component {
           )}
         </Gallery>
         {this.state.loader && <Loader />}
-        {this.state.imgArr && (
+        {this.isButtonVisible() && (
           <LoaderBtn onClick={this.onLoaderButton} type="button">
             Load more
           </LoaderBtn>
@@ -85,3 +89,4 @@ export class ImageGallery extends Component {
     );
   }
 }
+ImageGalleryItem.propTypes = { imgRequestName: PropTypes.string.isRequired };

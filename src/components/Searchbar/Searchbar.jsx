@@ -16,14 +16,15 @@ export class Searchbar extends Component {
   };
 
   handleChange = e => {
-    this.setState({ imgRequestName: e.target.value });
+    this.setState({ imgRequestName: e.target.value.trim() });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state.imgRequestName);
-    this.props.onSubmit(this.state.imgRequestName);
-    this.reset();
+    if (this.state.imgRequestName.length > 0) {
+      this.props.onSubmit(this.state.imgRequestName.toLowerCase());
+      this.reset();
+    }
   };
 
   reset = () => this.setState({ imgRequestName: '' });

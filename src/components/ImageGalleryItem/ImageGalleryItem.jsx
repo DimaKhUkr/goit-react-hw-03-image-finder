@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import {
   ImageGalleryItemList,
   ImageGalleryItemImg,
@@ -15,4 +17,15 @@ export const ImageGalleryItem = ({ imgArr, onImgClick }) => {
       </ImageGalleryItemList>
     );
   });
+};
+
+ImageGalleryItem.propTypes = {
+  onImgClick: PropTypes.func.isRequired,
+  imgArr: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    })
+  ),
 };
